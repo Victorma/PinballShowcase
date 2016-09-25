@@ -1,23 +1,30 @@
 #! /bin/sh
 
-# Example install script for Unity3D project. See the entire example: https://github.com/JonathanPorta/ci-build
+BASE_URL=http://netstorage.unity3d.com/unity
+HASH=649f48bbbf0f
+VERSION=5.4.1f1
 
-# This link changes from time to time. I haven't found a reliable hosted installer package for doing regular
-# installs like this. You will probably need to grab a current link from: http://unity3d.com/get-unity/download/archive
-echo 'Downloading from http://netstorage.unity3d.com/unity/649f48bbbf0f/MacEditorInstaller/Unity-5.4.1f1.pkg: '
-curl -o Unity.pkg http://netstorage.unity3d.com/unity/649f48bbbf0f/MacEditorInstaller/Unity-5.4.1f1.pkg
-echo 'Downloading from http://netstorage.unity3d.com/unity/649f48bbbf0f/MacEditorTargetInstaller/UnitySetup-iOS-Support-for-Editor-5.4.1f1.pkg: '
-curl -o Unity-iOS.pkg http://netstorage.unity3d.com/unity/649f48bbbf0f/MacEditorTargetInstaller/UnitySetup-iOS-Support-for-Editor-5.4.1f1.pkg
+download() {
+  file=$1
+  url="$BASE_URL/$HASH/$package"
 
-echo 'Installing Unity.pkg'
-sudo installer -dumplog -package Unity.pkg -target /
+  echo "Downloading from $url: "
+  curl -o `basename "$package"` "$url"
+}
 
-echo 'Installing Unity-iOS.pkg'
-sudo installer -dumplog -package Unity-iOS.pkg -target /
+install() {
+  package=$1
+  download "$package"
 
-ls -laR /Applications/Unity | grep iOSSupport
+  echo "Installing "`basename "$package"`
+  sudo installer -dumplog -package `basename "$package"` -target /
+}
 
-echo 'Opening Unity...'
-/Applications/Unity/Unity.app/Contents/MacOS/Unity -projectPath $(pwd) -quit
+# See $BASE_URL/$HASH/unity-$VERSION-$PLATFORM.ini for complete list
+# of available packages, where PLATFORM is `osx` or `win`
 
-# sudo mv /Applications/Unity/PlaybackEngines/iOSSupport /Applications/Unity/Unity.app/Contents/PlaybackEngines/iOSSupport
+install "MacEditorInstaller/Unity-$VERSION.pkg"
+install "MacEditorTargetInstaller/UnitySetup-Windows-Support-for-Editor-$VERSION.pkg"
+#install "MacEditorTargetInstaller/UnitySetup-Mac-Support-for-Editor-$VERSION.pkg"
+install "MacEditorTargetInstaller/UnitySetup-Linux-Support-for-Editor-$VERSION.pkg"
+install "MacEditorTargetInstaller/UnitySetup-iOS-Support-for-Editor-$VERSION.pkg"
