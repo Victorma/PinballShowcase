@@ -11,7 +11,7 @@ XCODE_PROJECT="Unity-iPhone.xcodeproj"
 echo "Creating Build dir"
 mkdir -p $(pwd)/Build/
 echo "Attempting to build $project for Windows"
-/Applications/Unity/Unity.app/Contents/MacOS/Unity -batchmode -nographics -silent-crashes -logFile $(pwd)/unity.log -projectPath $(pwd) -buildTarget ios -executeMethod Builder.PerformiOSBuild -quit
+/Applications/Unity/Unity.app/Contents/MacOS/Unity -batchmode -nographics -silent-crashes -logFile $(pwd)/unity.log -projectPath $(pwd) -executeMethod Builder.PerformiOSBuild -quit
 
 echo 'Logs from build'
 cat $(pwd)/unity.log
