@@ -15,4 +15,6 @@ sudo installer -dumplog -package Unity.pkg -target /
 echo 'Installing Unity-iOS.pkg'
 sudo installer -dumplog -package Unity-iOS.pkg -target /
 
-ls -laR /Applications/Unity/ | grep iOSSupport
+ls -laR /Applications/Unity | grep iOSSupport
+
+sudo mv /Applications/Unity/PlaybackEngines/iOSSupport /Applications/Unity/Unity.app/Contents/PlaybackEngines/iOSSupport

@@ -13,7 +13,7 @@ echo "Creating Build dir"
 mkdir -p $(pwd)/Builds/
 mkdir -p $(pwd)/Builds/iOS
 echo "Attempting to build $project for Windows"
-/Applications/Unity/Unity.app/Contents/MacOS/Unity -batchmode -nographics -silent-crashes -logFile /dev/stdout -projectPath $(pwd) -username victorma-fire@hotmail.com -password vic116 -executeMethod Builder.PerformiOSBuild -quit
+/Applications/Unity/Unity.app/Contents/MacOS/Unity -batchmode -nographics -silent-crashes -logFile /dev/stdout -projectPath $(pwd) -username 'victorma-fire@hotmail.com' -password 'vic116' -executeMethod Builder.PerformiOSBuild -quit
 
 echo 'Build file dir:'
 ls -la $(pwd)/Builds/
