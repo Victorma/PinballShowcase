@@ -15,7 +15,7 @@ namespace Vuforia
                                                 ITrackableEventHandler
     {
         public AudioSource pinballAudio;
-        public VideoPlaybackBehaviour pinballVideo;
+        public TextureAnimator pinballVideo;
         public RandomButtonLights pinballLights;
 
         #region PRIVATE_MEMBER_VARIABLES
@@ -74,6 +74,7 @@ namespace Vuforia
         {
             Renderer[] rendererComponents = GetComponentsInChildren<Renderer>(true);
             Collider[] colliderComponents = GetComponentsInChildren<Collider>(true);
+            Canvas[] canvasComponents = GetComponentsInChildren<Canvas>(true);
 
             // Enable rendering:
             foreach (Renderer component in rendererComponents)
@@ -87,9 +88,15 @@ namespace Vuforia
                 component.enabled = true;
             }
 
+            // Enable Canvas:
+            foreach (Canvas component in canvasComponents)
+            {
+                component.enabled = true;
+            }
+
 
             pinballAudio.Play();
-            //pinballVideo.VideoPlayer.SeekTo(0f);
+            pinballVideo.Restart();
             pinballLights.Play();
 
             Debug.Log("Trackable " + mTrackableBehaviour.TrackableName + " found");
@@ -100,6 +107,7 @@ namespace Vuforia
         {
             Renderer[] rendererComponents = GetComponentsInChildren<Renderer>(true);
             Collider[] colliderComponents = GetComponentsInChildren<Collider>(true);
+            Canvas[] canvasComponents = GetComponentsInChildren<Canvas>(true);
 
             // Disable rendering:
             foreach (Renderer component in rendererComponents)
@@ -113,8 +121,13 @@ namespace Vuforia
                 component.enabled = false;
             }
 
+            // Disable Canvas:
+            foreach (Canvas component in canvasComponents)
+            {
+                component.enabled = false;
+            }
+
             pinballAudio.Stop();
-            //pinballVideo.VideoPlayer.Pause();
             pinballLights.Stop();
 
             Debug.Log("Trackable " + mTrackableBehaviour.TrackableName + " lost");
